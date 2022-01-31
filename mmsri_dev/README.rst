@@ -1,4 +1,7 @@
 
+Rebuild by JKD
+Included VE in build
+
 MMS Reference Implementation
 ============================
 
