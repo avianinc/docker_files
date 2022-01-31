@@ -1,0 +1,9 @@
+{
+    "display_name": "Rapids Python 3.8",
+    "language": "python",
+    "argv": [
+     "/usr/local/share/jupyter/kernels/python3_8/python3-8-kernel.sh",
+     "-f",
+     "{connection_file}"
+    ]
+}

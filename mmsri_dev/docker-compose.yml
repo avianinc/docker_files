@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:11-alpine
+    environment:
+      - POSTGRES_PASSWORD=test1234
+      - POSTGRES_USER=mmsuser
+      - POSTGRES_DB=mms
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.8.1
+    environment:
+      - "discovery.type=single-node"
+    volumes:
+      - elastic-data:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+      - 9300:9300
+
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    environment:
+      - "MINIO_ACCESS_KEY=admintest"
+      - "MINIO_SECRET_KEY=admintest"
+    volumes:
+      - ./storage/minio:/data
+    command: server --address 0.0.0.0:9000 /data
+    ports:
+      - 9000:9000
+
+  mms:
+    build: 
+      context: .
+      dockerfile: Dockerfile_mms
+    container_name: mms
+    hostname: mms
+    environment:
+      - "SPRING_PROFILES_ACTIVE=test"
+    volumes:
+      - storage-mms:/data
+    depends_on:
+      - postgres
+      - elasticsearch
+      - minio
+    ports:
+      - 8080:8080
+
+  ve:
+    build:    
+      context:  ./ve
+      dockerfile: Dockerfile_ve
+    container_name: visual_editor
+    hostname: visual_editor
+    volumes:
+      - storage-ve:/data
+    ports:
+      - 80:9000
+
+# Volumes
+volumes:
+  pg-data:
+  elastic-data:
+  storage-mms:
+  storage-ve:
+
+

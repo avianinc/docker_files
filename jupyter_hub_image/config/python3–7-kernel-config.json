@@ -1,0 +1,9 @@
+{
+    "display_name": "Python 3.7",
+    "language": "python",
+    "argv": [
+     "/usr/local/share/jupyter/kernels/python3_7/python3-7-kernel.sh",
+     "-f",
+     "{connection_file}"
+    ]
+}

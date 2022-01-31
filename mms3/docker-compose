@@ -1,0 +1,112 @@
+version: '3.1'
+
+# Generated on 04-03-2019
+
+services:
+  alfresco:
+    image: openmbeeguest/mms-repo:3.4.2-SNAPSHOT
+    container_name: v342-mms
+    environment:
+      - CATALINA_OPTS=-Xmx1G -XX:+UseConcMarkSweepGC
+      - MMS_DB_USER=mms
+      - MMS_DB_PASSWORD=mmspass
+      - MMS_DB=mms
+      - ALFRESCO_DB_USER=mms
+      - ALFRESCO_DB_PASSWORD=mmspass
+      - ALFRESCO_DB=alfresco
+    depends_on:
+      - postgresql
+      - activemq
+      - elastic
+      - solr
+    networks:
+      - internal
+    ports:
+      - 8080:8080
+    volumes:
+      - alf_logs:/usr/local/tomcat/logs
+      - alfresco-data-volume:/opt/alf_data
+    tmpfs:
+      - /tmp
+      - /usr/local/tomcat/temp/
+      - /usr/local/tomcat/work/
+
+  solr:
+    image: openmbeeguest/mms-solr:3.4.2-SNAPSHOT
+    container_name: v342-solr
+    environment:
+      CATALINA_OPTS: "-Xmx1G -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:G1HeapRegionSize=8m -XX:MaxGCPauseMillis=200"
+    networks:
+      - internal
+    volumes:
+      - alf_logs:/usr/local/tomcat/logs/
+      - alfresco-data-volume:/opt/alf_data
+    tmpfs:
+      - /tmp
+      - /usr/local/tomcat/temp/
+      - /usr/local/tomcat/work/
+
+  activemq:
+    image: openmbeeguest/mms-activemq:3.4.2-SNAPSHOT
+    container_name: v342-activemq
+    ports:
+      - 61616:61616
+      - 61614:61614
+      - 8161:8161
+    volumes:
+      - activemq-data-volume:/data/activemq
+      - activemq-log-volume:/var/log/activemq
+      - activemq-conf-volume:/opt/activemq/conf
+    environment:
+      - ACTIVEMQ_ADMIN_LOGIN admin
+      - ACTIVEMQ_ADMIN_PASSWORD admin
+    networks:
+      - internal
+
+  elastic:
+    image: openmbeeguest/mms-elastic:3.4.2-SNAPSHOT
+    container_name: v342-elastic
+    environment:
+      CLEAN: 'false'
+    ports:
+      - 9200:9200
+    volumes:
+      - elastic-data-volume:/tmp/elasticsearch/nodes
+    networks:
+      - internal
+
+  postgresql:
+    image: openmbeeguest/mms-postgres:3.4.2-SNAPSHOT
+    container_name: v342-postgres
+    volumes:
+       - postgres-data-volume:/var/lib/postgresql/data
+    environment:
+      - MMS_DB_USER=mms
+      - MMS_DB_PASSWORD=mmspass
+      - MMS_DB=mms
+      - ALFRESCO_DB_USER=mms
+      - ALFRESCO_DB_PASSWORD=mmspass
+      - ALFRESCO_DB=alfresco
+    networks:
+      - internal
+
+volumes:
+  alf_logs:
+    external: true
+  alfresco-data-volume:
+    external: true
+  postgres-data-volume:
+    external: true
+  activemq-data-volume:
+    external: true
+  activemq-log-volume:
+    external: true
+  activemq-conf-volume:
+    external: true
+  elastic-data-volume:
+    external: true
+  nginx-external-volume:
+    external: true
+
+networks:
+  internal:
