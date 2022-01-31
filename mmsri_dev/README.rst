@@ -1,7 +1,7 @@
 
-Rebuild by JKD
-- Included VE in build
-- Added volumes
+Rebuild by JKD <br>
+- Included VE in build <br>
+- Added volumes <br>
 
 MMS Reference Implementation
 ============================
