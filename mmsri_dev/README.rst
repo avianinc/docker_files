@@ -1,11 +1,11 @@
+| Rebuild by JKD
+1. Included VE directly in build
+2. Added volumes
 
-Rebuild by JKD <br>
-- Included VE in build <br>
-- Added volumes <br>
+============================
 
 MMS Reference Implementation
 ============================
-
 
 .. image:: https://img.shields.io/lgtm/grade/java/g/Open-MBEE/mms.svg?logo=lgtm&logoWidth=18
    :target: https://lgtm.com/projects/g/Open-MBEE/mms/context:java
