@@ -1,0 +1,2 @@
+jwt.secret=MAKE_ME_SOMETHING_REALLY_LONG
+jwt.expiration=86400
