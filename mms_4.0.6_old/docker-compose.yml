@@ -1,0 +1,84 @@
+version: '3.8'
+
+services:
+  postgres:
+   image: postgres:11-alpine
+   restart: always
+   environment:
+      POSTGRES_ROOT_PASSWORD: 123456
+      POSTGRES_PASSWORD: test1234
+      POSTGRES_USER: mmsuser
+      POSTGRES_DB: mms
+   ports:
+     - 5432:5432
+
+  # mysql:
+  #   image: mysql
+  #   restart: always
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: test1234
+  #     MYSQL_DATABASE: mms
+  #     MYSQL_USER: mmsuser
+  #     MYSQL_PASSWORD: test1234
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.8.1
+    environment:
+      - "discovery.type=single-node"
+    ports:
+        - 9200:9200
+        - 9300:9300
+
+  minio:
+      image: minio/minio:latest
+      environment:
+          - "MINIO_ROOT_USER=admintest"
+          - "MINIO_ROOT_PASSWORD=admintest"
+      command: server tmp/data --console-address :9001
+      ports:
+          - 9000:9000
+          - 9001:9001
+
+  mms:
+    build: .
+    container_name: mms
+    hostname: mms
+    environment:
+        - "SPRING_PROFILES_ACTIVE=test"
+    depends_on:
+        - postgres
+        #- mysql
+        - elasticsearch
+        - minio
+        - ve
+    ports: 
+        - 8080:8080
+
+# this was fun... the remove rootscope is working with the rest of the tools
+# https://github.com/Open-MBEE/ve/tree/feature/remove-rootscope
+  ve_os:
+    build:    
+      context:  ./ve-feature-remove-rootscope
+      # context:  ./ve_backport_os
+      dockerfile: Dockerfile
+    container_name: visual_editor
+    hostname: visual_editor
+    depends_on:
+        - postgres
+        #- mysql
+    ports:
+      - 80:9000
+  
+  # added for easy access to postgres
+  # use 
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "6080:8080"
+
+# lets add a few more:
+# jupyterhub, 
+# linux(deb,)
+# Nexus3
+# what else????

@@ -1,11 +1,9 @@
 FROM openjdk:11.0.8-jdk
-#COPY . /mms
-#WORKDIR /mms
+
 COPY . /mms
 WORKDIR /mms
 
-
-RUN ./gradlew --no-daemon bootJar
+RUN ./gradlew --no-daemon bootJar --refresh-dependencies
 
 RUN find . -type f -name example-*.jar -not -iname '*javadoc*' -not -iname '*sources*' -exec cp '{}' '/app.jar' ';'
 ENV JDK_JAVA_OPTIONS "-XX:MaxRAMPercentage=90.0"
