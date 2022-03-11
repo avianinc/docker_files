@@ -1,0 +1,94 @@
+{
+    "_qualifiedId": "/europa/PROJECT-123456/300/301",
+    "_siteCharacterizationId": "europa",
+    "_relatedDocuments": [
+        {
+            "_siteCharacterizationId": "europa",
+            "_parentViews": [
+                {
+                    "name": "301",
+                    "sysmlId": "301"
+                }
+            ],
+            "name": "301",
+            "sysmlId": "301"
+        }
+    ],
+    "_qualifiedName": "/europa/JW_TEST2/300/301",
+    "sysmlId": "301",
+    "_properties": [
+        {
+            "_qualifiedId": "/europa/PROJECT-123456/300/301/302",
+            "_siteCharacterizationId": "europa",
+            "_qualifiedName": "/europa/JW_TEST2/300/301/302",
+            "sysmlId": "302",
+            "_editable": false,
+            "_creator": "admin",
+            "_modified": "2016-08-16T08:20:43.731-0700",
+            "_modifier": "admin",
+            "_created": "2016-08-16T08:20:43.731-0700",
+            "name": "302",
+            "documentation": "to",
+            "ownerId": "301",
+            "_read": "2016-08-16T12:48:48.229-0700",
+            "typeId": null,
+            "isDerived": false,
+            "defaultValue": 
+                {
+                    "value": "dlam_string",
+                    "type": "LiteralString"
+                }
+            ,
+            "type": "Property"
+        }
+    ],
+    "_editable": false,
+    "_creator": "admin",
+    "_modified": "2016-08-16T08:18:09.377-0700",
+    "_modifier": "admin",
+    "_created": "2016-08-16T08:18:09.377-0700",
+    "name": "301",
+    "documentation": "else",
+    "ownerId": "300",
+    "_read": "2016-08-16T12:48:48.218-0700",
+    "_displayedElements": [
+        "301",
+        "302",
+        "303"
+    ],
+    "_childViews": [],
+    "_view2view": [
+        {
+            "childrenViews": [
+                "301",
+                "302"
+            ],
+            "id": "301"
+        }
+    ],
+    "_allowedElements": [
+        "301",
+        "302",
+        "303"
+    ],
+    "_contains": [
+        {
+            "sourceType": "reference",
+            "source": "301",
+            "sourceProperty": "documentation",
+            "type": "Paragraph"
+        }
+    ],
+    "type": "Class",
+    "_contents": {
+        "valueExpression": null,
+        "operand": [
+            {
+                "valueExpression": null,
+                "type": "InstanceValue",
+                "instanceId": "_18_0_5_407019f_1468188892970_158569_14563"
+            }
+        ],
+        "type": "Expression"
+    }
+}

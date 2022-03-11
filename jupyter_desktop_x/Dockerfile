@@ -28,14 +28,11 @@ RUN rm -rf /var/lib/apt/lists/*
 ## Build the jupyter lab environment
 RUN mamba install -c conda-forge -y git nodejs \
     sos sos-notebook jupyterlab-sos sos-papermill sos-r sos-python sos-bash \
-<<<<<<< HEAD
     jupyter-sysml-kernel jupyterlab-git
-=======
-    jupyter-sysml-kernel jupyterlab-git jupyter_kernel_gateway
+    # jupyter-sysml-kernel jupyterlab-git jupyter_kernel_gateway
 
 RUN pip install elyra jupyterlab-scheduler jupyterlab-interactive-dashboard-editor \
     openmdao[all] jupyter-contrib-core jupyter-contrib-nbextensions
->>>>>>> 6ec6f58285513b7a02677fffb1e622784517b636
 
 RUN pip install jupyterlab-novnc
 RUN jupyter lab build
@@ -83,11 +80,8 @@ RUN cd /home/ubuntu
 
 # Setup Jupyterlab server and run
 EXPOSE 8888
-<<<<<<< HEAD
 EXPOSE 3389
 
-=======
->>>>>>> 6ec6f58285513b7a02677fffb1e622784517b636
 CMD ["jupyter", "lab", "--ip='*'", "--port=8888", "--no-browser", "--allow-root"]
 
 # Used for trouble shooting
